@@ -1,5 +1,7 @@
 local remap = require("pkgrt.remap")
 
+
+
 require("lazy").setup({
     spec = {
 
@@ -46,6 +48,7 @@ require("lazy").setup({
         {
             'scalameta/nvim-metals',
             tag = 'v0.8.x',
+            lazy = false,
             config = function()
                 local api = vim.api
                 local metals_config = require("metals").bare_config()
@@ -63,12 +66,11 @@ require("lazy").setup({
                     'nvim-lua/plenary.nvim',
                     tag = 'v0.1.4'
                 },
-                {   
+                {
                     'mfussenegger/nvim-dap',
                     tag = '0.6.0',
                     config = function()
                         local dap = require("dap")
-                        
                         dap.configurations.scala = {
                             {
                                 type = "scala",
@@ -96,6 +98,7 @@ require("lazy").setup({
 
         {
             'NeogitOrg/neogit',
+            lazy = false,
             config = function()
                 local neogit = require('neogit')
                 neogit.setup({})
@@ -104,10 +107,62 @@ require("lazy").setup({
         },
 
         {
+            'jose-elias-alvarez/null-ls.nvim',
+            branch = 'main',
+            lazy = false,
+            dependencies = {
+                {
+                    'nvim-lua/plenary.nvim',
+                    tag = 'v0.1.4',
+                }
+            },
+            config = function()
+                local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
+                local null_ls = require('null-ls')
+                null_ls.setup({
+                    sources = {
+                        null_ls.builtins.formatting.black,
+                        null_ls.builtins.formatting.isort,
+                    },
+
+                    on_attach = function(client, bufnr)
+                        if client.supports_method("textDocument/formatting") then
+                            vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+                            vim.api.nvim_create_autocmd("BufWritePre", {
+                                group = augroup,
+                                buffer = bufnr,
+                                callback = function()
+                                    vim.lsp.buf.format()
+                                end,
+                            })
+                        end
+                    end,
+                })
+            end,
+        },
+
+        {
             'VonHeikemen/lsp-zero.nvim',
             branch = 'v3.x',
+            lazy = false,
+            dependencies = {
+                { 'neovim/nvim-lspconfig', tag = 'v0.1.6' },
+                { 'williamboman/mason.nvim', tag = 'v1.8.1' },
+                { 'williamboman/mason-lspconfig.nvim', tag = 'v1.19.0' },
+                -- Autocompletion
+                { 'hrsh7th/nvim-cmp', branch = 'main' },
+                { 'hrsh7th/cmp-buffer', branch = 'main' },
+                { 'hrsh7th/cmp-path', branch = 'main' },
+                { 'saadparwaiz1/cmp_luasnip', branch = 'master' },
+                { 'hrsh7th/cmp-nvim-lsp', branch = 'main' },
+                { 'hrsh7th/cmp-nvim-lua', branch = 'main' },
+                -- Snippets
+                { 'L3MON4D3/LuaSnip', tag = 'v2.0.0' },
+                { 'rafamadriz/friendly-snippets', branch = 'main' },
+            },
             config = function()
                 local lsp = require('lsp-zero')
+
                 lsp.preset('recommended')
 
                 local cmp = require('cmp')
@@ -144,13 +199,6 @@ require("lazy").setup({
                     vim.keymap.set("n", "<leader>cf", function () vim.lsp.buf.format() end, opts)
                 end)
 
-                require('lspconfig').pylsp.setup({
-                    plugins = {
-                        black = { enabled = true },
-                        pyls_isort = { enabled = true },
-                    }
-                })
-
                 require('mason').setup({})
                 require('mason-lspconfig').setup({
                     -- Replace the language servers listed here 
@@ -159,7 +207,7 @@ require("lazy").setup({
                         'gopls',
                         'tsserver', 
                         'rust_analyzer',
-                        'pylsp',
+                        'pyright',
                         'taplo',
                         'volar',
                         'sqls',
@@ -168,50 +216,24 @@ require("lazy").setup({
 
                     handlers = {
                       lsp.default_setup,
-                      ["pylsp"] = function ()
-                          local lspconfig = require('lspconfig')
-                          lspconfig.pylsp.setup = {
-                            settings = {
-                                pylsp = {
-                                    plugins = {
-                                        pycodestyle = {
-                                            ignore = {'W391'},
-                                            maxLineLength = 132,
-                                        },
-                                        black = { enabled = true },
-                                        isort = { enabled = true, profile = 'black' },
-                                    }
-                                }
-                            }
-                          }
-                      end,
+                      lua_ls = lsp.noop,
+                      -- lua_ls = function ()
+                      --     local lsp = require('lsp-zero')
+                      --     local lua_opts = lsp.nvim_lua_ls()
+                      --     require('lspconfig').lua_ls.setup(lua_opts)
+                      -- end,
                     },
 
                 })
 
 
             end,
-            dependencies = {
-                { 'neovim/nvim-lspconfig', tag = 'v0.1.6' },
-                { 'williamboman/mason.nvim', tag = 'v1.8.1' },
-                { 'williamboman/mason-lspconfig.nvim', tag = 'v1.19.0' },
-                -- Autocompletion
-                { 'hrsh7th/nvim-cmp', branch = 'main' },
-                { 'hrsh7th/cmp-buffer', branch = 'main' },
-                { 'hrsh7th/cmp-path', branch = 'main' },
-                { 'saadparwaiz1/cmp_luasnip', branch = 'master' },
-                { 'hrsh7th/cmp-nvim-lsp', branch = 'main' },
-                { 'hrsh7th/cmp-nvim-lua', branch = 'main' },
-                -- Snippets
-                { 'L3MON4D3/LuaSnip', tag = 'v2.0.0' },
-                { 'rafamadriz/friendly-snippets', branch = 'main' },
-            }
         },
     },
 
     defaults = {
-        lazy = false,
-        version = false,
+        lazy = true,
+        -- version = false,
     },
 })
 
