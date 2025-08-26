@@ -18,6 +18,10 @@ function M.run_tests_with_coverage()
     vim.api.nvim_command('!pytest --cov')
 end
 
+function M.run_diagnostics()
+    vim.api.nvim_command([[!pyright -v ]] .. os.getenv("HOME") .. "/.virtualenvs")
+end
+
 function M.set_file()
     local file = vim.fn.input("Python file: ", "", "file")
     M.file = file

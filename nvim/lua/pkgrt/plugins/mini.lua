@@ -1,0 +1,7 @@
+return {
+    "echasnovski/mini.nvim",
+    lazy = false,
+    version = "*",
+    config = function()
+    end,
+}

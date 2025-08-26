@@ -1,0 +1,33 @@
+return {}
+
+-- return {
+--     'nvim-treesitter/nvim-treesitter',
+--     tag = 'v0.9.2',
+--     lazy = false,
+--     config = function()
+--         require 'nvim-treesitter.configs'.setup {
+--             ensure_installed = {
+--                 "bash",
+--                 "c",
+--                 "diff",
+--                 "go",
+--                 "html",
+--                 "lua",
+--                 "luadoc",
+--                 "python",
+--                 "scala",
+--                 "terraform",
+--                 "vim",
+--                 "vimdoc",
+--                 "vue",
+--             },
+--             sync_install = true,
+--             auto_install = false,
+--             highlight = {
+--                 enable = true,
+--                 additional_vim_regex_highlighting = false,
+--             },
+--         }
+--         vim.cmd('TSUpdate')
+--     end,
+-- }

@@ -2,7 +2,7 @@ local M = {}
 
 M.main_class_name = nil
 
-function buf_find_package(bufn)
+local function buf_find_package(bufn)
     local pattern = "package ([%a%p]*)"
     local lines = vim.api.nvim_buf_get_lines(bufn, 0, -1, false)
     for _, line in pairs(lines) do
@@ -13,8 +13,8 @@ function buf_find_package(bufn)
     end
 end
 
-function buf_find_class_name(bufn)
-    local pattern = "object (%a*) extends App {" 
+local function buf_find_class_name(bufn)
+    local pattern = "object (%a*) extends App {"
     local lines = vim.api.nvim_buf_get_lines(bufn, 0, -1, false)
     for _, line in pairs(lines) do
         local _, _, mainClass = string.find(line, pattern)
@@ -23,7 +23,6 @@ function buf_find_class_name(bufn)
         end
     end
 end
-
 
 function M.execute_current_file()
     local pack = buf_find_package(0)
