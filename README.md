@@ -29,3 +29,7 @@ Ensure that `~/.local/bin/pkgrt` is added to your `PATH`. You can do so by addin
 ```bash
 export PATH="$HOME/.local/bin/pkgrt:$PATH"
 ```
+
+### Required Fonts
+
+To ensure proper display and functionality, please install [Hack Nerd Font Mono](https://www.nerdfonts.com/font-downloads) from NerdFonts on your system.
