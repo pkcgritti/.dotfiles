@@ -1,0 +1,73 @@
+{
+    "editor.fontFamily": "Hack Nerd Font Mono",
+    "python.analysis.autoImportCompletions": true,
+    "python.analysis.typeCheckingMode": "strict",
+
+    "python.terminal.activateEnvironment": false,
+    "python.terminal.activateEnvInCurrentTerminal": false,
+    "python.terminal.launchArgs": [],
+
+    "[python]": {
+        "diffEditor.ignoreTrimWhitespace": false,
+        "editor.formatOnType": true,
+        "editor.wordBasedSuggestions": "off",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit"
+        },
+        "editor.defaultFormatter": "ms-python.black-formatter"
+    },
+
+    "terminal.integrated.enablePersistentSessions": false,
+    "terminal.integrated.defaultProfile.linux": "zsh",
+    "terminal.integrated.defaultProfile.osx": "zsh",
+    "terminal.integrated.shellIntegration.enabled": false,
+    "terminal.integrated.shellIntegration.decorationsEnabled": "both",
+    "isort.args": [
+        "--profile",
+        "black"
+    ],
+    "svelte.enable-ts-plugin": true,
+
+    "[javascript]": {
+        "editor.tabSize": 2,
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit",
+            "source.fixAll.eslint": "explicit"
+        },
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+
+    "[typescript]": {
+        "editor.tabSize": 2,
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit",
+            "source.fixAll.eslint": "explicit"
+        },
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+
+    "[svelte]": {
+        "editor.tabSize": 2,
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit",
+            "source.fixAll.eslint": "explicit"
+        },
+        "editor.defaultFormatter": "svelte.svelte-vscode"
+    },
+
+    "javascript.updateImportsOnFileMove.enabled": "never",
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+
+    "go.buildFlags": ["-tags=wireinject"],
+
+    "redhat.telemetry.enabled": false,
+    "extensions.experimental.affinity": {
+        "asvetliakov.vscode-neovim": 1
+    },
+}
