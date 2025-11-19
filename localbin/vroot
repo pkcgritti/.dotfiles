@@ -1,0 +1,30 @@
+#!/bin/bash
+# Use or create a virtualenv in the current directory
+
+PROJECT=$(basename $(pwd))
+ENV_DIR="${HOME}/.virtualenvs/${PROJECT}"
+PYTHON_VERSION=${1:-"python3.9"}
+
+if [ -d "venv" ]; then
+    echo "Sourcing venv/bin/activate"
+    source venv/bin/activate
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [ -d ".venv" ]; then
+    echo "Sourcing .venv/bin/activate"
+    source .venv/bin/activate
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+else
+    if ! [ -d ".git" ]; then
+        echo "WARNING: Must be used in a git repository root directory."
+        return
+    fi
+
+    if ! [ -d "${ENV_DIR}" ]; then
+        echo "Creating ${ENV_DIR}"
+        python -m virtualenv -p ${PYTHON_VERSION} ${ENV_DIR}
+    fi
+
+    echo "Sourcing ${ENV_DIR}/bin/activate"
+    source ${ENV_DIR}/bin/activate
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
