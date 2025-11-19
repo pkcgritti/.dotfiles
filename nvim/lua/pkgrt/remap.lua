@@ -13,8 +13,20 @@ vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 -- reload current rc file
 vim.keymap.set("n", "<leader>rc", ":source %<CR>")
 vim.keymap.set("n", "<leader>rl", ":luafile %<CR>")
-vim.keymap.set("n", "<leader>re", ":edit /Users/gritti/.config/nvim/init.lua<CR>")
-vim.keymap.set("n", "<leader>rr", ":edit /Users/gritti/.config/nvim/lua/pkgrt/remap.lua<CR>")
+vim.keymap.set("n", "<leader>re", ":edit " .. vim.fn.stdpath('config') .. "/init.lua<CR>")
+vim.keymap.set("n", "<leader>rm", ":edit " .. vim.fn.stdpath('config') .. "/lua/pkgrt/remap.lua<CR>")
+vim.keymap.set("n", "<leader>rp", ":edit " .. vim.fn.stdpath('config') .. "/lua/pkgrt<CR>")
+vim.keymap.set("n", "<leader>rr", function()
+    local reloadset = {
+        "/lua/pkgrt/remap.lua",
+        "/lua/pkgrt/set.lua",
+        "/lua/pkgrt/utils.lua",
+    }
+    for _, mod in pairs(reloadset) do
+        dofile(vim.fn.stdpath('config') .. mod)
+    end
+    print("Neovim config reloaded!")
+end)
 
 -- buffer utilities
 vim.keymap.set("n", "<leader>bd", ":bd<CR>")
@@ -105,7 +117,10 @@ end
 -- python mode remappings
 function M.python_mode()
     local runner = require('pkgrt.runner.python')
-    local diagnostic = require('workspace-diagnostics')
+    -- local diagnostic = require('workspace-diagnostics')
+
+    vim.keymap.set("n", "<leader>ff", runner.format_current_file)
+    vim.keymap.set("n", "<leader>fs", runner.isort_current_file)
 
     vim.keymap.set("n", "<F5>", runner.execute_current_file)
     vim.keymap.set("n", "<leader>fe", runner.execute_current_file)
@@ -117,31 +132,28 @@ function M.python_mode()
     vim.keymap.set("n", "<F7>", runner.run_tests)
     vim.keymap.set("n", "<leader>pt", runner.run_tests)
 
-    vim.keymap.set("n", "<leader>pd", function()
-        for _, client in ipairs(vim.lsp.get_clients()) do
-            diagnostic.populate_workspace_diagnostics(client, 0)
-        end
-    end)
+    -- vim.keymap.set("n", "<leader>pd", function()
+    --     for _, client in ipairs(vim.lsp.get_clients()) do
+    --         diagnostic.populate_workspace_diagnostics(client, 0)
+    --     end
+    -- end)
 
     vim.keymap.set("n", "<F8>", runner.run_tests_with_coverage)
     vim.keymap.set("n", "<leader>pc", runner.run_tests_with_coverage)
 
     vim.keymap.set("n", "<F9>", runner.set_file)
-    vim.keymap.set("n", "<leader>fs", runner.set_file)
+    vim.keymap.set("n", "<leader>fS", runner.set_file)
 
     vim.keymap.set("n", "<F10>", runner.get_file)
-    vim.keymap.set("n", "<leader>fg", runner.get_file)
+    vim.keymap.set("n", "<leader>fG", runner.get_file)
 end
 
--- scala mode remappings
--- function M.scala_mode()
---    local runner = require('pkgrt.runner.scala')
---
---    vim.keymap.set('n', '<F5>', runner.execute_current_file)
---    vim.keymap.set('n', '<F6>', runner.execute_custom_class)
---    vim.keymap.set('n', '<F7>', runner.set_main_class_name)
---    vim.keymap.set('n', '<F8>', runner.get_main_class_name)
---end
+function M.go_mode()
+    local runner = require('pkgrt.runner.go')
+
+    vim.keymap.set("n", "<leader>ff", runner.format_current_file)
+    vim.keymap.set("n", "<leader>fs", runner.go_mod_tidy)
+end
 
 -- toogle comments
 function M.comment()

@@ -1,7 +1,15 @@
 local utils = require("pkgrt.utils")
+local remap = require("pkgrt.remap")
+
 local M = {
     ["clangd"] = {},
-    ["gopls"] = {},
+
+    ["gopls"] = {
+        on_init = function(client)
+            remap.go_mode()
+        end,
+    },
+
     ["lua_ls"] = {
             settings = {
                 Lua = {
@@ -15,22 +23,47 @@ local M = {
                 },
             },
     },
+
     ["pyright"] = {
         ---@param client { config: { settings: { python: { pythonPath: string } } } } 
         on_init = function(client)
             client.config.settings.python.pythonPath = utils.find_python()
+            client.notify('workspace/didChangeConfiguration')
+            remap.python_mode()
         end,
         settings = {
             python = {
                 analysis = {
-                    autoSearchPaths = true,
-                    diagnosticMode = "workspace",
-                    useLibraryCodeForTypes = true,
+                    -- Desabilita análise de libs externas (acelera imports como numpy/tensorflow)
+                    useLibraryCodeForTypes = false,
+                    autoSearchPaths = false,
+                    diagnosticMode = "openFilesOnly",
+                    diagnosticSeverityOverrides = {
+                        reportImportCycles = 'none',
+                        reportUndefinedVariable = 'warning',
+                        reportOptionalMemberAccess = 'none',
+                        reportOptionalIterable = 'none',
+                        reportOptionalContextManager = 'none',
+                        reportOptionalOperand = 'none',
+                        reportUntypedFunctionDecorator = 'none',
+                        reportUntypedClassDecorator = 'none',
+                        reportUntypedBaseClass = 'none',
+                        reportUntypedNamedTuple = 'none',
+                        reportPrivateUsage = 'none',
+                        reportConstantRedefinition = 'none',
+                        reportIncompatibleMethodOverride = 'none',
+                        reportIncompatibleVariableOverride = 'none',
+                    },
+                    stubPath = vim.fn.stdpath('cache') .. '/pyright-stubs', -- cria pasta de stubs
                     typeCheckingMode = "strict",
                 },
-            }
-        }
+            },
+        },
+        flags = {
+            debounce_text_changes = 200,
+        },
     },
+
     ["rust_analyzer"] = {
         settings = {
             ["rust-analyzer"] = {

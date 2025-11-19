@@ -1,0 +1,48 @@
+return {}
+
+-- return {
+--     "yetone/avante.nvim",
+--     build = "make",
+--     event = "VeryLazy",
+--     version = false,
+--
+--     ---@module 'avante'
+--     ---@type avante.Config
+--     opts = {
+--         instructions_file = "avante.md",
+--         provider = "codex",
+--         -- providers = {
+--         --     endpoint = "https://api.openai.com/v1",
+--         --     model = "gpt-4o",
+--         --     api_key_name = "OPENAI_API_KEY",
+--         --     timeout = 30000,
+--         --     extra_request_body = {
+--         --         temperature = 0.3,
+--         --         max_tokens = 8192,
+--         --     }
+--         -- }
+--         acp_providers = {
+--             ["codex"] = {
+--                 -- command = "npx @zed-industries/codex-acp",
+--                 command = "npx",
+--                 args = { "@zed-industries/codex-acp" },
+--                 env = {
+--                     NODE_NO_WARNINGS = "1",
+--                 },
+--             },
+--         }
+--     },
+--
+--     dependencies = {
+--         "nvim-lua/plenary.nvim",
+--         "MunifTanjim/nui.nvim",
+--         {
+--           -- Make sure to set this up properly if you have lazy=true
+--           'MeanderingProgrammer/render-markdown.nvim',
+--           opts = {
+--             file_types = { "markdown", "Avante" },
+--           },
+--           ft = { "markdown", "Avante" },
+--         },
+--     }
+-- }

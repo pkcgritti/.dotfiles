@@ -6,6 +6,14 @@ function M.execute_current_file()
     vim.api.nvim_command('!python %')
 end
 
+function M.format_current_file()
+    vim.api.nvim_command('!black %')
+end
+
+function M.isort_current_file()
+    vim.api.nvim_command('!isort %')
+end
+
 function M.execute_custom_file()
     vim.api.nvim_command([[!python ]] .. M.file)
 end
