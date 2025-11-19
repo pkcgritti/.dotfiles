@@ -1,7 +1,0 @@
-#!/bin/bash
-
-set -euo pipefail
-
-rm -rf nvim
-cp -r ~/.config/nvim nvim
-
