@@ -1,13 +1,10 @@
-local mylsp = require("pkgrt.lsp")
-local utils = require("pkgrt.utils")
-
-
 return {
     "mason-org/mason-lspconfig.nvim",
+    tag = "v1.32.0",
     lazy = false,
     dependencies = {
         { "mason-org/mason.nvim", opts = {} },
-        "neovim/nvim-lspconfig",
+        { "neovim/nvim-lspconfig", tag = "v2.5.0" },
         "folke/lazydev.nvim",
 
         -- Autocompletion
@@ -34,6 +31,7 @@ return {
                 "lua_ls",
                 "pyright",
                 "rust_analyzer",
+                "cmake",
             },
         })
 
@@ -84,12 +82,12 @@ return {
 
         require("cmp_nvim_lsp").default_capabilities()
 
-        local lspconfig = require("lspconfig")
-        lspconfig.clangd.setup(mylsp.clangd)
-        lspconfig.gopls.setup(mylsp.gopls)
-        lspconfig.lua_ls.setup(mylsp.lua_ls)
-        lspconfig.pyright.setup(mylsp.pyright)
-        lspconfig.rust_analyzer.setup(mylsp.rust_analyzer)
+        -- Carrega configurações dos servers LSP definidos no arquivo
+        -- pkgrt.lsp.
+        for name, config in pairs(require("pkgrt.lsp")) do
+            vim.lsp.config(name, config)
+            vim.lsp.enable(name)
+        end
 
         -- TODO: Precisamos checar aqui se estamos ou não no modo VSCode
         -- compatible antes de iniciar os language servers, para que nosso

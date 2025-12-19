@@ -74,6 +74,11 @@ local M = {
             },
         },
     },
+
+    ["cmake"] = {
+        filetypes = {"cmake"},
+        root_markers = {"CMakeLists.txt", ".git"},
+    },
 }
 
 return M
