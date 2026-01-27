@@ -2,8 +2,8 @@ local utils = require("pkgrt.utils")
 local remap = require("pkgrt.remap")
 
 local M = {
+    ["bashls"] = {},
     ["clangd"] = {},
-
     ["gopls"] = {
         on_init = function(client)
             remap.go_mode()
