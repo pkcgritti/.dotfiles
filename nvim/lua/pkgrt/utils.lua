@@ -26,14 +26,17 @@ function M.find_python()
         end
     end
     -- 4. Tenta poetry
-    local poetry_python = vim.fn.system("poetry env info -p 2>/dev/null")
-    poetry_python = vim.fn.trim(poetry_python)
+    if vim.fn.executable("poetry") ~= 1 then
+        goto skip_poetry
+    end
+    local poetry_python = vim.fn.trim(vim.fn.system("poetry env info -p"))
     if poetry_python ~= "" then
         local poetry_bin = poetry_python .. "/bin/python"
         if vim.fn.filereadable(poetry_bin) == 1 then
             return poetry_bin
         end
     end
+    ::skip_poetry::
     -- 5. Tenta base
     local basePath = vim.fn.expand("$HOME/.virtualenvs/base/bin/python")
     if vim.fn.filereadable(basePath) == 1 then

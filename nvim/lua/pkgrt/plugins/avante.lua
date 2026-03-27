@@ -2,7 +2,7 @@ return {
     "yetone/avante.nvim",
     build = "make",
     event = "VeryLazy",
-    version = false,
+    commit = "80f7079556c6acf3d3effa13c22f0e4fd00bcffd",
 
     ---@module 'avante'
     ---@type avante.Config
@@ -35,7 +35,7 @@ return {
 
     dependencies = {
         "nvim-lua/plenary.nvim",
-        "MunifTanjim/nui.nvim",
+        { "MunifTanjim/nui.nvim", commit = "de740991c12411b663994b2860f1a4fd0937c130" },
         {
           -- Make sure to set this up properly if you have lazy=true
           'MeanderingProgrammer/render-markdown.nvim',

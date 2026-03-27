@@ -3,20 +3,20 @@ return {
     tag = "v1.32.0",
     lazy = false,
     dependencies = {
-        { "mason-org/mason.nvim", opts = {} },
+        { "mason-org/mason.nvim", commit = "57e5a8addb8c71fb063ee4acda466c7cf6ad2800", opts = {} },
         { "neovim/nvim-lspconfig", tag = "v2.5.0" },
-        "folke/lazydev.nvim",
+        { "folke/lazydev.nvim", commit = "5231c62aa83c2f8dc8e7ba957aa77098cda1257d" },
 
         -- Autocompletion
-        "hrsh7th/nvim-cmp",
-        "hrsh7th/cmp-nvim-lsp",
-        "hrsh7th/cmp-buffer",
-        "hrsh7th/cmp-path",
-        "hrsh7th/cmp-cmdline",
+        { "hrsh7th/nvim-cmp", commit = "d97d85e01339f01b842e6ec1502f639b080cb0fc" },
+        { "hrsh7th/cmp-nvim-lsp", commit = "cbc7b02bb99fae35cb42f514762b89b5126651ef" },
+        { "hrsh7th/cmp-buffer", commit = "b74fab3656eea9de20a9b8116afa3cfc4ec09657" },
+        { "hrsh7th/cmp-path", commit = "c642487086dbd9a93160e1679a1327be111cbc25" },
+        { "hrsh7th/cmp-cmdline", commit = "d126061b624e0af6c3a556428712dd4d4194ec6d" },
 
         -- Snippets
-        "L3MON4D3/LuaSnip",
-        "saadparwaiz1/cmp_luasnip"
+        { "L3MON4D3/LuaSnip", commit = "3d5bced1b9ae69fa3f9b1942e28af5dbc537f946" },
+        { "saadparwaiz1/cmp_luasnip", commit = "98d9cb5c2c38532bd9bdb481067b20fea8f32e90" },
     },
     config = function()
         if vim.g.vscode then
