@@ -1,12 +1,10 @@
 return {
     'nvim-treesitter/nvim-treesitter',
-    tag = 'v0.9.2',
+    tag = 'v0.10.0',
     lazy = false,
     config = function()
         require('nvim-treesitter.configs').setup({
             auto_install = false,
-            ignore_install = {},
-            modules = {},
             ensure_installed = {
                 "bash",
                 "c",
@@ -17,6 +15,8 @@ return {
                 "html",
                 "lua",
                 "luadoc",
+                "markdown",
+                "markdown_inline",
                 "python",
                 "scala",
                 "terraform",
@@ -28,9 +28,7 @@ return {
             highlight = {
                 enable = true,
                 additional_vim_regex_highlighting = false,
-                disable = { "c", "cpp", "go" },
             },
         })
-        vim.cmd('TSUpdate')
     end,
 }
